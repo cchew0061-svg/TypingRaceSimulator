@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author TyPosaurus
  * @version 0.7 (the other 0.3 is left as an exercise for the reader)
- */
+ **/
 public class TypingRace
 {
     private final int passageLength;   // Total characters in the passage to type
