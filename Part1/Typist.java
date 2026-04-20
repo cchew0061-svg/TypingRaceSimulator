@@ -199,7 +199,7 @@ public class Typist
     }
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Typist t = new Typist('@', "name1", 0.5);
         //test slideback
         t.typeCharacter();
@@ -234,5 +234,5 @@ public class Typist
         System.out.println(t.getProgress());
         t.typeCharacter();
         System.out.println(t.getProgress());
-    }
+    }*/
 }
