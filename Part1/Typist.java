@@ -24,6 +24,7 @@ public class Typist
     private int progress;
     private int burnoutTurnsLeft;
     private boolean burnoutState;
+    private boolean justMistyped;
 
     // Constructor of class Typist
     /**
@@ -42,6 +43,7 @@ public class Typist
         this.progress = 0;
         this.burnoutTurnsLeft = 0;
         this.burnoutState = false;
+        this.justMistyped = false;
     }
 
 
@@ -136,6 +138,7 @@ public class Typist
         this.burnoutState = false;
         this.burnoutTurnsLeft = 0;
         this.progress = 0;
+        this.justMistyped = false;
     }
 
     /**
@@ -169,6 +172,7 @@ public class Typist
         if(this.progress < 0){
             this.progress = 0;
         }
+        this.justMistyped = true;
     }
 
     /**
@@ -198,6 +202,13 @@ public class Typist
         this.typistSymbol = newSymbol;
     }
 
+    public boolean hasJustMistyped(){
+        return this.justMistyped;
+    }
+
+    public void resetJustMistyped(){
+        this.justMistyped = false;
+    }
 
     /*public static void main(String[] args) {
         Typist t = new Typist('@', "name1", 0.5);
