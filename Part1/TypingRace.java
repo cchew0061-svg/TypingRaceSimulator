@@ -135,6 +135,8 @@ public class TypingRace
      */
     private void advanceTypist(Typist theTypist)
     {
+        theTypist.resetJustMistyped();
+
         if (theTypist.isBurntOut())
         {
             // Recovering from burnout — skip this turn
@@ -235,6 +237,11 @@ public class TypingRace
         {
             System.out.print('~');
             spacesAfter--; // symbol + ~ together take two characters
+        }
+        else if(theTypist.hasJustMistyped())
+        {
+            System.out.print('<');
+            spacesAfter--;
         }
 
         multiplePrint(' ', spacesAfter);
