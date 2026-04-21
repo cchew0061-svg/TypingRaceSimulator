@@ -205,7 +205,7 @@ public class TypingRace
 
         multiplePrint('=', passageLength + 3);
         System.out.println();
-        System.out.println("  [zz] = burnt out    [<] = just mistyped");
+        System.out.println("  [~] = burnt out    [<] = just mistyped");
     }
 
     /**
@@ -219,7 +219,7 @@ public class TypingRace
      * be a nice improvement — perhaps a [<] marker after their symbol.
      *
      * @param theTypist the typist whose lane to print
-     */
+     **/
     private void printSeat(Typist theTypist)
     {
         int spacesBefore = theTypist.getProgress();
@@ -269,5 +269,14 @@ public class TypingRace
             System.out.print(aChar);
             i = i + 1;
         }
+    }
+
+
+    public static void main(String[] args) {
+        TypingRace race = new TypingRace(40);
+        race.addTypist(new Typist('1', "TURBOFINGERS", 0.85), 1);
+        race.addTypist(new Typist('2', "QWERTY_QUEEN",  0.60), 2);
+        race.addTypist(new Typist('3', "HUNT_N_PECK",   0.30), 3);
+        race.startRace();
     }
 }
