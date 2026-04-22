@@ -237,11 +237,17 @@ public class TypingRace
         {
             System.out.print('~');
             spacesAfter--; // symbol + ~ together take two characters
+            if(spacesAfter < 0){
+                spacesAfter = 0;
+            }
         }
         else if(theTypist.hasJustMistyped())
         {
             System.out.print('<');
             spacesAfter--;
+            if(spacesAfter < 0){
+                spacesAfter = 0;
+            }
         }
 
         multiplePrint(' ', spacesAfter);
