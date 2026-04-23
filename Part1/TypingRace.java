@@ -110,11 +110,11 @@ public class TypingRace
             System.out.println("And the winner is... " + seat1Typist.getName() + "!");
             System.out.println("Final Accuracy: " + seat1Typist.getAccuracy());
         }
-        else if(raceFinishedBy(seat2Typist)){
+        if(raceFinishedBy(seat2Typist)){
             System.out.println("And the winner is... " + seat2Typist.getName() + "!");
             System.out.println("Final Accuracy: " + seat2Typist.getAccuracy());
         }
-        else if(raceFinishedBy(seat3Typist)){
+        if(raceFinishedBy(seat3Typist)){
             System.out.println("And the winner is... " + seat3Typist.getName() + "!");
             System.out.println("Final Accuracy: " + seat3Typist.getAccuracy());
         }
