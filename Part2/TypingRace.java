@@ -124,6 +124,15 @@ public class TypingRace
         }
     }
 
+    public boolean raceFinished(){
+        if(this.raceFinishedBy(seat1Typist) || this.raceFinishedBy(seat2Typist) || this.raceFinishedBy(seat3Typist)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public void advanceOneTurn(){
         advanceTypist(seat1Typist);
         advanceTypist(seat2Typist);
