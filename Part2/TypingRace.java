@@ -82,9 +82,7 @@ public class TypingRace
         while (!finished)
         {
             // Advance each typist by one turn
-            advanceTypist(seat1Typist);
-            advanceTypist(seat2Typist);
-            advanceTypist(seat3Typist);
+            advanceOneTurn();
 
             // Check if any typist has finished the passage
             if ( raceFinishedBy(seat1Typist) || raceFinishedBy(seat2Typist) || raceFinishedBy(seat3Typist) )
@@ -163,5 +161,11 @@ public class TypingRace
         {
             return false;
         }
+    }
+
+    public void advanceOneTurn(){
+        advanceTypist(seat1Typist);
+        advanceTypist(seat2Typist);
+        advanceTypist(seat3Typist);
     }
 }
