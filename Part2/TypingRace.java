@@ -62,45 +62,6 @@ public class TypingRace
     }
 
     /**
-     * Starts the typing race.
-     * All typists are reset to the beginning, then the simulation runs
-     * turn by turn until one typist completes the full passage.
-     *
-     * Note from Ty: "I didn't bother printing the winner at the end,
-     * you can probably figure that out yourself."
-     */
-    public void startRace()
-    {
-        boolean finished = false;
-
-        // Reset all typists to the start of the passage
-        // (Ty was in a hurry here)
-        seat1Typist.resetToStart();
-        seat2Typist.resetToStart();
-        seat3Typist.resetToStart();
-
-        while (!finished)
-        {
-            // Advance each typist by one turn
-            advanceOneTurn();
-
-            // Check if any typist has finished the passage
-            if ( raceFinishedBy(seat1Typist) || raceFinishedBy(seat2Typist) || raceFinishedBy(seat3Typist) )
-            {
-                finished = true;
-            }
-
-            // Wait 200ms between turns so the animation is visible
-            try {
-                TimeUnit.MILLISECONDS.sleep(200);
-            } catch (Exception e) {}
-        }
-
-        // TODO (Task 2a): Print the winner's name here
-
-    }
-
-    /**
      * Simulates one turn for a typist.
      *
      * If the typist is burnt out, they recover one turn's worth and skip typing.
