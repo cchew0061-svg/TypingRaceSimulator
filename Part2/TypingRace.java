@@ -71,6 +71,7 @@ public class TypingRace
      */
     public void startRace()
     {
+        TypingRace race = new TypingRace(40);
         boolean finished = false;
 
         // Reset all typists to the start of the passage
@@ -167,5 +168,16 @@ public class TypingRace
         advanceTypist(seat1Typist);
         advanceTypist(seat2Typist);
         advanceTypist(seat3Typist);
+    }
+
+
+    public Typist getSeat1Typist(){
+        return seat1Typist;
+    }
+    public Typist getSeat2Typist(){
+        return seat2Typist;
+    }
+    public Typist getSeat3Typist(){
+        return seat3Typist;
     }
 }
