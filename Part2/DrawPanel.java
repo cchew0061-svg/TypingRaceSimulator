@@ -13,7 +13,7 @@ public class DrawPanel extends JPanel
     public void startAnimation()
     {
         new Thread(() -> {
-            while (true)
+            while (!race.raceFinished())
             {
                 race.advanceOneTurn(); // update logic
                 repaint();             // redraw screen
