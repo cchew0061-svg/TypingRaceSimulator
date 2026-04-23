@@ -59,10 +59,6 @@ public class TypingRace
         {
             seat3Typist = theTypist;
         }
-        else
-        {
-            System.out.println("Cannot seat typist at seat " + seatNumber + " — there is no such seat.");
-        }
     }
 
     /**
@@ -90,9 +86,6 @@ public class TypingRace
             advanceTypist(seat2Typist);
             advanceTypist(seat3Typist);
 
-            // Print the current state of the race
-            printRace();
-
             // Check if any typist has finished the passage
             if ( raceFinishedBy(seat1Typist) || raceFinishedBy(seat2Typist) || raceFinishedBy(seat3Typist) )
             {
@@ -106,18 +99,7 @@ public class TypingRace
         }
 
         // TODO (Task 2a): Print the winner's name here
-        if(raceFinishedBy(seat1Typist)){
-            System.out.println("And the winner is... " + seat1Typist.getName() + "!");
-            System.out.println("Final Accuracy: " + seat1Typist.getAccuracy());
-        }
-        if(raceFinishedBy(seat2Typist)){
-            System.out.println("And the winner is... " + seat2Typist.getName() + "!");
-            System.out.println("Final Accuracy: " + seat2Typist.getAccuracy());
-        }
-        if(raceFinishedBy(seat3Typist)){
-            System.out.println("And the winner is... " + seat3Typist.getName() + "!");
-            System.out.println("Final Accuracy: " + seat3Typist.getAccuracy());
-        }
+
     }
 
     /**
@@ -181,115 +163,5 @@ public class TypingRace
         {
             return false;
         }
-    }
-
-    /**
-     * Prints the current state of the race to the terminal.
-     * Shows each typist's position along the passage, burnout state,
-     * and a WPM estimate based on current progress.
-     */
-    private void printRace()
-    {
-        System.out.print('\u000C'); // Clear terminal
-
-        System.out.println("  TYPING RACE - passage length: " + passageLength + " chars");
-        multiplePrint('=', passageLength + 3);
-        System.out.println();
-
-        printSeat(seat1Typist);
-        System.out.println();
-
-        printSeat(seat2Typist);
-        System.out.println();
-
-        printSeat(seat3Typist);
-        System.out.println();
-
-        multiplePrint('=', passageLength + 3);
-        System.out.println();
-        System.out.println("  [~] = burnt out    [<] = just mistyped");
-    }
-
-    /**
-     * Prints a single typist's lane.
-     *
-     * Examples:
-     *   |          ⌨           | TURBOFINGERS (Accuracy: 0.85)
-     *   |    [zz]              | HUNT_N_PECK  (Accuracy: 0.40) BURNT OUT (2 turns)
-     *
-     * Note: Ty forgot to show when a typist has just mistyped. That would
-     * be a nice improvement — perhaps a [<] marker after their symbol.
-     *
-     * @param theTypist the typist whose lane to print
-     **/
-    private void printSeat(Typist theTypist)
-    {
-        int spacesBefore = theTypist.getProgress();
-        int spacesAfter  = passageLength - theTypist.getProgress();
-
-        System.out.print('|');
-        multiplePrint(' ', spacesBefore);
-
-        // Always show the typist's symbol so they can be identified on screen.
-        // Append ~ when burnt out so the state is visible without hiding identity.
-        System.out.print(theTypist.getSymbol());
-        if (theTypist.isBurntOut())
-        {
-            System.out.print('~');
-            spacesAfter--; // symbol + ~ together take two characters
-            if(spacesAfter < 0){
-                spacesAfter = 0;
-            }
-        }
-        else if(theTypist.hasJustMistyped())
-        {
-            System.out.print('<');
-            spacesAfter--;
-            if(spacesAfter < 0){
-                spacesAfter = 0;
-            }
-        }
-
-        multiplePrint(' ', spacesAfter);
-        System.out.print('|');
-        System.out.print(' ');
-
-        // Print name and accuracy
-        if (theTypist.isBurntOut())
-        {
-            System.out.print(theTypist.getName()
-                + " (Accuracy: " + theTypist.getAccuracy() + ")"
-                + " BURNT OUT (" + theTypist.getBurnoutTurnsRemaining() + " turns)");
-        }
-        else
-        {
-            System.out.print(theTypist.getName()
-                + " (Accuracy: " + theTypist.getAccuracy() + ")");
-        }
-    }
-
-    /**
-     * Prints a character a given number of times.
-     *
-     * @param aChar the character to print
-     * @param times how many times to print it
-     */
-    private void multiplePrint(char aChar, int times)
-    {
-        int i = 0;
-        while (i < times)
-        {
-            System.out.print(aChar);
-            i = i + 1;
-        }
-    }
-
-
-    public static void main(String[] args) {
-        TypingRace race = new TypingRace(40);
-        race.addTypist(new Typist('1', "TURBOFINGERS", 0.85), 1);
-        race.addTypist(new Typist('2', "QWERTY_QUEEN",  0.60), 2);
-        race.addTypist(new Typist('3', "HUNT_N_PECK",   0.30), 3);
-        race.startRace();
     }
 }
