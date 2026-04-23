@@ -6,7 +6,7 @@ public class TypingRaceGUI
     {
         JFrame frame = new JFrame("Typing Race");
 
-        RacePanel panel = new RacePanel(race);
+        DrawPanel panel = new DrawPanel(race);
 
         frame.add(panel);
         frame.setSize(800, 300);
