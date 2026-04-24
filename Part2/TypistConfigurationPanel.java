@@ -82,6 +82,7 @@ class TypistConfigurationPanel extends JPanel
         }
         if(keyboardBox.getSelectedItem().equals("Touchscreen")){
             accuracy = accuracy * 0.5;
+            burnoutValue = burnoutValue * 0.3;
             extraBurnoutTurns = extraBurnoutTurns + 1;
         }
         if(keyboardBox.getSelectedItem().equals("Stenography")){
