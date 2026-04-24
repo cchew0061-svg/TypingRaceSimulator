@@ -129,6 +129,13 @@ class TypistConfigurationPanel extends JPanel
             accuracy = accuracy * 0.8;
         }
 
+        if(accuracy > 1){
+            accuracy = 1;
+        }
+        else if(accuracy < 0){
+            accuracy = 0;
+        }
+
         char typistSymbol;
         if(symbolField.getText().trim() == null){
             typistSymbol = '!';
