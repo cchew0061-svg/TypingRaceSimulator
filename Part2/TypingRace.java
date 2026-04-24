@@ -79,6 +79,15 @@ public class TypingRace
                 accuracy = 1;
             }
         }
+        if(theTypist.getEnergyDrink() && theTypist.getProgress() < passageLength/2){
+            accuracy = accuracy * 1.3;
+            if(accuracy > 1){
+                accuracy = 1;
+            }
+        }
+        else if(theTypist.getEnergyDrink() && theTypist.getProgress() >= passageLength/2){
+            accuracy = accuracy * 0.7;
+        }
 
         if (theTypist.isBurntOut())
         {
@@ -106,13 +115,13 @@ public class TypingRace
 
         // Burnout check — pushing too hard increases burnout risk
         // (probability scales with accuracy squared, capped at ~0.05)
-        double burnoutChance = 0.05 * accuracy * accuracy;
+        double burnoutChance = 0.05 * accuracy * accuracy * theTypist.getBurnoutValue();
         if(caffeine && turnCounter > 10){
             burnoutChance = burnoutChance * 2;
         }
         if (Math.random() < burnoutChance)
         {
-            theTypist.burnOut(BURNOUT_DURATION);
+            theTypist.burnOut(BURNOUT_DURATION + theTypist.getExtraBurnoutTurns());
         }
     }
 
