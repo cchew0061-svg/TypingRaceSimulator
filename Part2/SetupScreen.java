@@ -9,11 +9,15 @@ public class SetupScreen
         JFrame frame = new JFrame("Setup Race");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel label = new JLabel("Number of Competitors: 3");
 
         JSlider slider = new JSlider(2, 6, 3);
+        
 
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
@@ -23,11 +27,6 @@ public class SetupScreen
             int value = slider.getValue();
             label.setText("Number of Competitors: " + value);
         });
-
-        JButton startButton = new JButton("Start Race");
-
-        frame.add(label);
-        frame.add(slider);
 
         //CHOOSE RACE LENGTH
         String[] lengthOptions = {"Short", "Medium", "Long", "Custom"};
@@ -42,26 +41,58 @@ public class SetupScreen
 
             customField.setEnabled(selected.equals("Custom"));
         });
-        frame.add(new JLabel("Passage Length:"));
-        frame.add(passageBox);
-        frame.add(customField);
 
         //CHOOSE GLOBAL MODIFIERS
         JCheckBox autocorrectBox = new JCheckBox("Autocorrect");
         JCheckBox caffeineBox = new JCheckBox("Caffeine Mode");
         JCheckBox nightBox = new JCheckBox("Night Shift");
 
-        frame.add(autocorrectBox);
-        frame.add(caffeineBox);
-        frame.add(nightBox);
+        JLabel autocorrectDescription = new JLabel("Autocorrect halves slide back amount for everyone when making a mistype.");
+        JLabel caffeineDescription = new JLabel("Caffeine Mode gives everyone a temporary speed boost for the first 10 turns, then increases everyone's burnout risk");
+        JLabel nightDescription = new JLabel("Night Shift lowers everyone's accuracy slightly.");
 
-        frame.add(startButton);
+        JButton startButton = new JButton("Start Race");
+
+        //ADD ALL COMPONENTS
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        slider.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passageBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        customField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        autocorrectBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        caffeineBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nightBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        autocorrectDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
+        caffeineDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nightDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        slider.setMaximumSize(new Dimension(250, 50));
+        customField.setMaximumSize(new Dimension(200, 25));
+        passageBox.setMaximumSize(new Dimension(200, 25));
+
+        container.add(label);
+        container.add(Box.createVerticalStrut(10));
+        container.add(slider);
+        container.add(Box.createVerticalStrut(10));
+        container.add(new JLabel("Passage Length:"));
+        container.add(passageBox);
+        container.add(customField);
+        container.add(Box.createVerticalStrut(10));
+        container.add(autocorrectBox);
+        container.add(caffeineBox);
+        container.add(nightBox);
+        container.add(autocorrectDescription);
+        container.add(caffeineDescription);
+        container.add(nightDescription);
+        container.add(startButton);
+
+        frame.add(container);
 
         frame.setVisible(true);
 
 
 
-        //START BUTTON
+        //EXECUTE
         startButton.addActionListener(e -> {
             int seats = slider.getValue();
             String selected = (String) passageBox.getSelectedItem();
