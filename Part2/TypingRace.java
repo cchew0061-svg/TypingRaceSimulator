@@ -42,7 +42,7 @@ public class TypingRace
      */
     public void addTypist(Typist theTypist, int seatNumber)
     {
-        typists[seatNumber - 1] = theTypist;
+        typists[seatNumber] = theTypist;
     }
 
     /**
@@ -142,14 +142,7 @@ public class TypingRace
 
     public static void main(String[] args)
     {
-        TypingRace race = new TypingRace(40, 4);
-
-        race.addTypist(new Typist('①', "TURBOFINGERS", 0.85), 1);
-        race.addTypist(new Typist('②', "QWERTY_QUEEN", 0.60), 2);
-        race.addTypist(new Typist('③', "HUNT_N_PECK", 0.30), 3);
-        race.addTypist(new Typist('4', "CAR_4", 0.80), 4);
-
-        race.startRaceGUI();
+        new SetupScreen();
     }
 
 }
