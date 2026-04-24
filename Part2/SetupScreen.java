@@ -59,23 +59,26 @@ public class SetupScreen
 
             String selected = (String) passageBox.getSelectedItem();
 
-            final String passage;
+            String passage;
 
             switch (selected) {
                 case "Short":
-                    passage = "The quick brown fox.";
+                    passage = "This is a short passage.";
                     break;
                 case "Medium":
-                    passage = "The quick brown fox jumps over the lazy dog near the river bank.";
+                    passage = "This passage is a medium length. This is an extra sentence to make it medium.";
                     break;
                 case "Long":
-                    passage = "The quick brown fox jumps over the lazy dog while several typists compete furiously in an intense keyboard race.";
+                    passage = "This passage is longer than the other default passages. That is because it has more sentences than the others. This is the last sentence of the passage.";
                     break;
                 case "Custom":
-                    passage = customField.getText();
+                    passage = customField.getText().trim();
+                    if(passage.isEmpty()){
+                        passage = "You didn't input a custom text.";
+                    }
                     break;
                 default:
-                    passage = "The quick brown fox.";
+                    passage = "default text";
                     break;
             }
 
