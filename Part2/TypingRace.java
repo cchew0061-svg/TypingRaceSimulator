@@ -16,6 +16,10 @@ public class TypingRace
     private final String passage;
     private Typist[] typists;
 
+    //MODIFIERS
+    private final boolean autocorrect;
+    private final boolean caffeine;
+
     // Accuracy thresholds for mistype and burnout events
     // (Ty tuned these values "by feel". They may need adjustment.)
     private static final double MISTYPE_BASE_CHANCE = 0.3;
@@ -29,10 +33,12 @@ public class TypingRace
      *
      * @param passageLength the number of characters in the passage to type
      */
-    public TypingRace(String passage, int typistNumber)
+    public TypingRace(String passage, int typistNumber, boolean autocorrect, boolean caffeine)
     {
         this.passage = passage;
         this.passageLength = passage.length();
+        this.autocorrect = autocorrect;
+        this.caffeine = caffeine;
         typists = new Typist[typistNumber];
     }
 
@@ -80,7 +86,12 @@ public class TypingRace
         // Mistype check — the probability should reflect the typist's accuracy
         if (Math.random() < (1 - theTypist.getAccuracy()) * MISTYPE_BASE_CHANCE)
         {
-            theTypist.slideBack(SLIDE_BACK_AMOUNT);
+            if(!autocorrect){
+                theTypist.slideBack(SLIDE_BACK_AMOUNT);
+            }
+            else if(autocorrect){
+                theTypist.slideBack(SLIDE_BACK_AMOUNT/2);
+            }
         }
 
         // Burnout check — pushing too hard increases burnout risk
