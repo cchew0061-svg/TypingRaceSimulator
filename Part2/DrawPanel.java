@@ -29,7 +29,6 @@ public class DrawPanel extends JPanel
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawString(race.getPassage(), 50, 30);
         int height = 60;
         for(int i = 0; i < race.getSeatCount(); i++){
             drawTypist(g, race.getTypist(i), height);
@@ -39,11 +38,33 @@ public class DrawPanel extends JPanel
 
     private void drawTypist(Graphics g, Typist t, int y)
     {
-        if (t == null) return;
+        String passage = race.getPassage();
 
-        int x = t.getProgress() * 10;
+        int progress = t.getProgress();
 
-        g.fillRect(x, y, 40, 20);
-        g.drawString(t.getName(), 10, y - 5);
+        if (progress > passage.length())
+        {
+            progress = passage.length();
+        }
+
+        String typed = passage.substring(0, progress);
+        String remaining = passage.substring(progress);
+
+        g.drawString(t.getName(), 10, y);
+
+        int x = 120;
+
+        g.setColor(Color.GREEN);
+        g.drawString(typed, x, y);
+
+        int typedWidth = g.getFontMetrics().stringWidth(typed);
+
+        g.setColor(Color.BLACK);
+        g.drawString("|", x + typedWidth, y);
+
+        int cursorWidth = g.getFontMetrics().stringWidth("|");
+
+        g.setColor(Color.BLACK);
+        g.drawString(remaining, x + typedWidth + cursorWidth, y);
     }
 }
