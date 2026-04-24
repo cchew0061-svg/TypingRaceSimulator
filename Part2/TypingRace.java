@@ -16,6 +16,8 @@ public class TypingRace
     private final String passage;
     private Typist[] typists;
 
+    private int turnCounter = 0;
+
     //MODIFIERS
     private final boolean autocorrect;
     private final boolean caffeine;
@@ -70,6 +72,14 @@ public class TypingRace
     {
         theTypist.resetJustMistyped();
 
+        double accuracy = theTypist.getAccuracy();
+        if(caffeine && turnCounter <= 10){
+            accuracy = accuracy * 1.2;
+            if(accuracy > 1){
+                accuracy = 1;
+            }
+        }
+
         if (theTypist.isBurntOut())
         {
             // Recovering from burnout — skip this turn
@@ -78,13 +88,13 @@ public class TypingRace
         }
 
         // Attempt to type a character
-        if (Math.random() < theTypist.getAccuracy())
+        if (Math.random() < accuracy)
         {
             theTypist.typeCharacter();
         }
 
         // Mistype check — the probability should reflect the typist's accuracy
-        if (Math.random() < (1 - theTypist.getAccuracy()) * MISTYPE_BASE_CHANCE)
+        if (Math.random() < (1 - accuracy) * MISTYPE_BASE_CHANCE)
         {
             if(!autocorrect){
                 theTypist.slideBack(SLIDE_BACK_AMOUNT);
@@ -96,7 +106,11 @@ public class TypingRace
 
         // Burnout check — pushing too hard increases burnout risk
         // (probability scales with accuracy squared, capped at ~0.05)
-        if (Math.random() < 0.05 * theTypist.getAccuracy() * theTypist.getAccuracy())
+        double burnoutChance = 0.05 * accuracy * accuracy;
+        if(caffeine && turnCounter > 10){
+            burnoutChance = burnoutChance * 2;
+        }
+        if (Math.random() < burnoutChance)
         {
             theTypist.burnOut(BURNOUT_DURATION);
         }
@@ -128,6 +142,7 @@ public class TypingRace
     }
 
     public void advanceOneTurn(){
+        turnCounter++;
         for(int i = 0; i<typists.length; i++){
             this.advanceTypist(typists[i]);
         }
