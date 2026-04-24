@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Write a description of class Typist here.
  *
@@ -29,6 +31,7 @@ public class Typist
     private double burnoutValue;
     private int extraBurnoutTurns;
     private boolean energyDrink;
+    private Color colour;
 
     // Constructor of class Typist
     /**
@@ -39,7 +42,7 @@ public class Typist
      * @param typistName    the name of the typist (e.g. "TURBOFINGERS")
      * @param typistAccuracy the typist's accuracy rating, between 0.0 and 1.0
      */
-    public Typist(char typistSymbol, String typistName, double typistAccuracy, double burnoutValue, int extraBurnoutTurns, boolean energyDrink)
+    public Typist(char typistSymbol, String typistName, double typistAccuracy, double burnoutValue, int extraBurnoutTurns, boolean energyDrink, Color colour)
     {
         this.typistSymbol = typistSymbol;
         this.typistName = typistName;
@@ -51,6 +54,7 @@ public class Typist
         this.burnoutValue = burnoutValue;
         this.extraBurnoutTurns = extraBurnoutTurns;
         this.energyDrink = energyDrink;
+        this.colour = colour;
         }
 
 
@@ -231,6 +235,10 @@ public class Typist
 
     public boolean getEnergyDrink(){
         return this.energyDrink;
+    }
+
+    public Color getColour(){
+        return this.colour;
     }
 
     /*public static void main(String[] args) {
