@@ -26,6 +26,10 @@ public class Typist
     private boolean burnoutState;
     private boolean justMistyped;
 
+    private double burnoutValue;
+    private int extraBurnoutTurns;
+    private boolean energyDrink;
+
     // Constructor of class Typist
     /**
      * Constructor for objects of class Typist.
@@ -35,7 +39,7 @@ public class Typist
      * @param typistName    the name of the typist (e.g. "TURBOFINGERS")
      * @param typistAccuracy the typist's accuracy rating, between 0.0 and 1.0
      */
-    public Typist(char typistSymbol, String typistName, double typistAccuracy)
+    public Typist(char typistSymbol, String typistName, double typistAccuracy, double burnoutValue, int extraBurnoutTurns, boolean energyDrink)
     {
         this.typistSymbol = typistSymbol;
         this.typistName = typistName;
@@ -44,7 +48,10 @@ public class Typist
         this.burnoutTurnsLeft = 0;
         this.burnoutState = false;
         this.justMistyped = false;
-    }
+        this.burnoutValue = burnoutValue;
+        this.extraBurnoutTurns = extraBurnoutTurns;
+        this.energyDrink = energyDrink;
+        }
 
 
     // Methods of class Typist
@@ -208,6 +215,22 @@ public class Typist
 
     public void resetJustMistyped(){
         this.justMistyped = false;
+    }
+
+    public double getBurnoutValue(){
+        return this.burnoutValue;
+    }
+
+    public void setBurnoutValue(double burnoutValue){
+        this.burnoutValue = burnoutValue;
+    }
+
+    public int getExtraBurnoutTurns(){
+        return this.extraBurnoutTurns;
+    }
+
+    public boolean getEnergyDrink(){
+        return this.energyDrink;
     }
 
     /*public static void main(String[] args) {
