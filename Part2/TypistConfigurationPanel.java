@@ -10,6 +10,7 @@ class TypistConfigurationPanel extends JPanel
     private JCheckBox energyDrink;
     private JCheckBox headphones;
     private JTextField symbolField;
+    private Color chosenColour = Color.GREEN;
 
     public TypistConfigurationPanel(int number)
     {
@@ -38,8 +39,29 @@ class TypistConfigurationPanel extends JPanel
 
         symbolField = new JTextField("@");
 
+        JButton colourButton = new JButton("Choose Colour");
+        JPanel colourPreview = new JPanel();
+        colourPreview.setBackground(chosenColour);
+        colourPreview.setPreferredSize(new Dimension(20, 20));
+
+        colourButton.addActionListener(e -> {
+            Color selected = JColorChooser.showDialog(
+                this,
+                "Choose Player Colour",
+                chosenColour
+            );
+
+            if (selected != null)
+            {
+                chosenColour = selected;
+                colourPreview.setBackground(chosenColour);
+            }
+        });
+
         add(nameField);
         add(symbolField);
+        add(colourButton);
+        add(colourPreview);
         add(styleBox);
         add(keyboardBox);
         add(wristSupport);
@@ -115,6 +137,6 @@ class TypistConfigurationPanel extends JPanel
             typistSymbol = (symbolField.getText().trim()).charAt(0);
         }
 
-        return new Typist(typistSymbol, nameField.getText(), accuracy, burnoutValue, extraBurnoutTurns, energyDrink.isSelected());
+        return new Typist(typistSymbol, nameField.getText(), accuracy, burnoutValue, extraBurnoutTurns, energyDrink.isSelected(), chosenColour);
     }
 }
