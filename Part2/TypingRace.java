@@ -13,6 +13,7 @@
 public class TypingRace
 {
     private final int passageLength;   // Total characters in the passage to type
+    private final String passage;
     private Typist[] typists;
 
     // Accuracy thresholds for mistype and burnout events
@@ -28,9 +29,10 @@ public class TypingRace
      *
      * @param passageLength the number of characters in the passage to type
      */
-    public TypingRace(int passageLength, int typistNumber)
+    public TypingRace(String passage, int typistNumber)
     {
-        this.passageLength = passageLength;
+        this.passage = passage;
+        this.passageLength = passage.length();
         typists = new Typist[typistNumber];
     }
 
@@ -138,7 +140,11 @@ public class TypingRace
         });
     }
 
-    
+    public String getPassage()
+    {
+        return passage;
+    }
+        
 
     public static void main(String[] args)
     {
