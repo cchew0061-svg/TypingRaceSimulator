@@ -29,6 +29,7 @@ public class DrawPanel extends JPanel
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+        g.drawString(race.getPassage(), 50, 30);
         int height = 60;
         for(int i = 0; i < race.getSeatCount(); i++){
             drawTypist(g, race.getTypist(i), height);
