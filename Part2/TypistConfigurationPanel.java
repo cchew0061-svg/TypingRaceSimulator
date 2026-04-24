@@ -9,6 +9,7 @@ class TypistConfigurationPanel extends JPanel
     private JCheckBox wristSupport;
     private JCheckBox energyDrink;
     private JCheckBox headphones;
+    private JTextField symbolField;
 
     public TypistConfigurationPanel(int number)
     {
@@ -35,7 +36,10 @@ class TypistConfigurationPanel extends JPanel
         energyDrink = new JCheckBox("Energy Drink");
         headphones = new JCheckBox("Noise Cancelling Headphones");
 
+        symbolField = new JTextField("@");
+
         add(nameField);
+        add(symbolField);
         add(styleBox);
         add(keyboardBox);
         add(wristSupport);
@@ -103,6 +107,14 @@ class TypistConfigurationPanel extends JPanel
             accuracy = accuracy * 0.8;
         }
 
-        return new Typist('A', nameField.getText(), accuracy, burnoutValue, extraBurnoutTurns, energyDrink.isSelected());
+        char typistSymbol;
+        if(symbolField.getText().trim() == null){
+            typistSymbol = '!';
+        }
+        else{
+            typistSymbol = (symbolField.getText().trim()).charAt(0);
+        }
+
+        return new Typist(typistSymbol, nameField.getText(), accuracy, burnoutValue, extraBurnoutTurns, energyDrink.isSelected());
     }
 }
