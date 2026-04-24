@@ -1,4 +1,3 @@
-import java.util.concurrent.TimeUnit;
 
 /**
  * A typing race simulation. Three typists race to complete a passage of text,
@@ -14,9 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class TypingRace
 {
     private final int passageLength;   // Total characters in the passage to type
-    private Typist seat1Typist;
-    private Typist seat2Typist;
-    private Typist seat3Typist;
+    private Typist[] typists;
 
     // Accuracy thresholds for mistype and burnout events
     // (Ty tuned these values "by feel". They may need adjustment.)
@@ -31,12 +28,10 @@ public class TypingRace
      *
      * @param passageLength the number of characters in the passage to type
      */
-    public TypingRace(int passageLength)
+    public TypingRace(int passageLength, int typistNumber)
     {
         this.passageLength = passageLength;
-        seat1Typist = null;
-        seat2Typist = null;
-        seat3Typist = null;
+        typists = new Typist[typistNumber];
     }
 
     /**
@@ -47,18 +42,7 @@ public class TypingRace
      */
     public void addTypist(Typist theTypist, int seatNumber)
     {
-        if (seatNumber == 1)
-        {
-            seat1Typist = theTypist;
-        }
-        else if (seatNumber == 2)
-        {
-            seat2Typist = theTypist;
-        }
-        else if (seatNumber == 3)
-        {
-            seat3Typist = theTypist;
-        }
+        typists[seatNumber - 1] = theTypist;
     }
 
     /**
@@ -118,36 +102,33 @@ public class TypingRace
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public boolean raceFinished(){
-        if(this.raceFinishedBy(seat1Typist) || this.raceFinishedBy(seat2Typist) || this.raceFinishedBy(seat3Typist)){
-            return true;
+        for(int i = 0; i<typists.length; i++){
+            if(this.raceFinishedBy(typists[i])){
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
     public void advanceOneTurn(){
-        advanceTypist(seat1Typist);
-        advanceTypist(seat2Typist);
-        advanceTypist(seat3Typist);
+        for(int i = 0; i<typists.length; i++){
+            this.advanceTypist(typists[i]);
+        }
     }
 
 
-    public Typist getSeat1Typist(){
-        return seat1Typist;
+    public int getSeatCount()
+    {
+        return typists.length;
     }
-    public Typist getSeat2Typist(){
-        return seat2Typist;
-    }
-    public Typist getSeat3Typist(){
-        return seat3Typist;
+
+    public Typist getTypist(int i)
+    {
+        return typists[i];
     }
 
     public void startRaceGUI()
@@ -161,11 +142,12 @@ public class TypingRace
 
     public static void main(String[] args)
     {
-        TypingRace race = new TypingRace(40);
+        TypingRace race = new TypingRace(40, 4);
 
         race.addTypist(new Typist('①', "TURBOFINGERS", 0.85), 1);
         race.addTypist(new Typist('②', "QWERTY_QUEEN", 0.60), 2);
         race.addTypist(new Typist('③', "HUNT_N_PECK", 0.30), 3);
+        race.addTypist(new Typist('4', "CAR_4", 0.80), 4);
 
         race.startRaceGUI();
     }
