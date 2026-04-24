@@ -88,18 +88,7 @@ public class SetupScreen
                     break;
             }
 
-            TypingRace race = new TypingRace(passage, seats, autocorrectBox.isSelected(), caffeineBox.isSelected());
-
-            for (int i = 0; i < seats; i++)
-            {
-                double accuracy = Math.random();
-                if(nightBox.isSelected()){
-                    accuracy = accuracy*0.8;
-                }
-                race.addTypist(new Typist('@', "Player " + (i + 1), accuracy), i);
-            }
-
-            new TypingRaceGUI(race);
+            new RacerConfigurationScreen(seats, passage, autocorrectBox.isSelected(), caffeineBox.isSelected(), nightBox.isSelected());
 
             frame.dispose();
         });
