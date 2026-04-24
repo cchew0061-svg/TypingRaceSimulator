@@ -28,14 +28,11 @@ public class SetupScreen
 
         frame.add(label);
         frame.add(slider);
-        frame.add(startButton);
-
-        frame.setVisible(true);
 
         //CHOOSE RACE LENGTH
-        String[] options = {"Short", "Medium", "Long", "Custom"};
+        String[] lengthOptions = {"Short", "Medium", "Long", "Custom"};
 
-        JComboBox<String> passageBox = new JComboBox<>(options);
+        JComboBox<String> passageBox = new JComboBox<>(lengthOptions);
 
         JTextField customField = new JTextField(20);
         customField.setEnabled(false);
@@ -49,16 +46,25 @@ public class SetupScreen
         frame.add(passageBox);
         frame.add(customField);
 
+        //CHOOSE GLOBAL MODIFIERS
+        JCheckBox autocorrectBox = new JCheckBox("Autocorrect");
+        JCheckBox caffeineBox = new JCheckBox("Caffeine Mode");
+        JCheckBox nightBox = new JCheckBox("Night Shift");
 
+        frame.add(autocorrectBox);
+        frame.add(caffeineBox);
+        frame.add(nightBox);
+
+        frame.add(startButton);
+
+        frame.setVisible(true);
 
 
 
         //START BUTTON
         startButton.addActionListener(e -> {
             int seats = slider.getValue();
-
             String selected = (String) passageBox.getSelectedItem();
-
             String passage;
 
             switch (selected) {
@@ -82,11 +88,15 @@ public class SetupScreen
                     break;
             }
 
-            TypingRace race = new TypingRace(passage, seats);
+            TypingRace race = new TypingRace(passage, seats, autocorrectBox.isSelected(), caffeineBox.isSelected());
 
             for (int i = 0; i < seats; i++)
             {
-                race.addTypist(new Typist('@', "Player " + (i + 1), Math.random()), i);
+                double accuracy = Math.random();
+                if(nightBox.isSelected()){
+                    accuracy = accuracy*0.8;
+                }
+                race.addTypist(new Typist('@', "Player " + (i + 1), accuracy), i);
             }
 
             new TypingRaceGUI(race);
