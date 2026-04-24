@@ -60,9 +60,9 @@ public class DrawPanel extends JPanel
         int typedWidth = g.getFontMetrics().stringWidth(typed);
 
         g.setColor(Color.BLACK);
-        g.drawString("|", x + typedWidth, y);
+        g.drawString(String.valueOf(t.getSymbol()), x + typedWidth, y);
 
-        int cursorWidth = g.getFontMetrics().stringWidth("|");
+        int cursorWidth = g.getFontMetrics().stringWidth(String.valueOf(t.getSymbol()));
 
         g.setColor(Color.BLACK);
         g.drawString(remaining, x + typedWidth + cursorWidth, y);
