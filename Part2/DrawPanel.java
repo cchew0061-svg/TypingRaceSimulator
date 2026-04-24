@@ -15,8 +15,8 @@ public class DrawPanel extends JPanel
         new Thread(() -> {
             while (!race.raceFinished())
             {
-                race.advanceOneTurn(); // update logic
-                repaint();             // redraw screen
+                race.advanceOneTurn();
+                repaint();
 
                 try {
                     Thread.sleep(200);
