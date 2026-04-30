@@ -163,13 +163,6 @@ public class TypingRace
         return typists[i];
     }
 
-    public void startRaceGUI()
-    {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            new TypingRaceGUI(this);
-        });
-    }
-
     public boolean raceFinished(){
         for(int i = 0; i<typists.length; i++){
             if(this.raceFinishedBy(typists[i])){
@@ -189,10 +182,15 @@ public class TypingRace
         return winner;
     }
 
-    public static void main(String[] args)
+    public static void startRaceGUI()
     {
         javax.swing.SwingUtilities.invokeLater(() -> {
             new SetupScreen();
         });
+    }
+
+    public static void main(String[] args)
+    {
+        startRaceGUI();
     }
 }
