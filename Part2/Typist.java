@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Write a description of class Typist here.
  *
@@ -26,6 +28,11 @@ public class Typist
     private boolean burnoutState;
     private boolean justMistyped;
 
+    private double burnoutValue;
+    private int extraBurnoutTurns;
+    private boolean energyDrink;
+    private Color colour;
+
     // Constructor of class Typist
     /**
      * Constructor for objects of class Typist.
@@ -35,7 +42,7 @@ public class Typist
      * @param typistName    the name of the typist (e.g. "TURBOFINGERS")
      * @param typistAccuracy the typist's accuracy rating, between 0.0 and 1.0
      */
-    public Typist(char typistSymbol, String typistName, double typistAccuracy)
+    public Typist(char typistSymbol, String typistName, double typistAccuracy, double burnoutValue, int extraBurnoutTurns, boolean energyDrink, Color colour)
     {
         this.typistSymbol = typistSymbol;
         this.typistName = typistName;
@@ -44,6 +51,10 @@ public class Typist
         this.burnoutTurnsLeft = 0;
         this.burnoutState = false;
         this.justMistyped = false;
+        this.burnoutValue = burnoutValue;
+        this.extraBurnoutTurns = extraBurnoutTurns;
+        this.energyDrink = energyDrink;
+        this.colour = colour;
     }
 
 
@@ -210,40 +221,23 @@ public class Typist
         this.justMistyped = false;
     }
 
-    /*public static void main(String[] args) {
-        Typist t = new Typist('@', "name1", 0.5);
-        //test slideback
-        t.typeCharacter();
-        t.typeCharacter();
-        t.slideBack(100);
-        System.out.println(t.getProgress());
-        //test burnout
-        t.burnOut(2);
-        t.recoverFromBurnout();
-        System.out.println(t.getBurnoutTurnsRemaining());
-        System.out.println(t.isBurntOut());
-        t.recoverFromBurnout();
-        System.out.println(t.getBurnoutTurnsRemaining());
-        System.out.println(t.isBurntOut());
-        //test reset
-        t.typeCharacter();
-        t.typeCharacter();
-        t.burnOut(5);
-        t.resetToStart();
-        System.out.println(t.getProgress());
-        System.out.println(t.getBurnoutTurnsRemaining());
-        System.out.println(t.isBurntOut());
-        //test accuracy
-        t.setAccuracy(20);
-        System.out.println(t.getAccuracy());
-        t.setAccuracy(-10);
-        System.out.println(t.getAccuracy());
-        //test movement
-        t.typeCharacter();
-        System.out.println(t.getProgress());
-        t.typeCharacter();
-        System.out.println(t.getProgress());
-        t.typeCharacter();
-        System.out.println(t.getProgress());
-    }*/
+    public double getBurnoutValue(){
+        return this.burnoutValue;
+    }
+
+    public void setBurnoutValue(double burnoutValue){
+        this.burnoutValue = burnoutValue;
+    }
+
+    public int getExtraBurnoutTurns(){
+        return this.extraBurnoutTurns;
+    }
+
+    public boolean getEnergyDrink(){
+        return this.energyDrink;
+    }
+
+    public Color getColour(){
+        return this.colour;
+    }
 }
