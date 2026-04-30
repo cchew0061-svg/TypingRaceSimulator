@@ -10,18 +10,25 @@ public class DrawPanel extends JPanel
         this.race = race;
     }
 
-    public void startAnimation()
-    {
+    public void startAnimation(){
         new Thread(() -> {
             while (!race.raceFinished())
             {
                 race.advanceOneTurn();
                 repaint();
 
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {}
+                try { Thread.sleep(200); } catch (Exception e) {}
             }
+
+            Typist winner = race.getWinner();
+
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "The winner is: " + winner.getName() +
+                    "\nThe winner's accuracy is: " + winner.getAccuracy()
+                );
+            });
         }).start();
     }
 
@@ -29,39 +36,42 @@ public class DrawPanel extends JPanel
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
-        int y = 50;
-
-        for (int i = 0; i < race.getSeatCount(); i++)
-        {
-            drawTypist(g, race.getTypist(i), y);
-            y += 50;
+        int height = 60;
+        for(int i = 0; i < race.getSeatCount(); i++){
+            drawTypist(g, race.getTypist(i), height);
+            height = height + 60;
         }
     }
 
     private void drawTypist(Graphics g, Typist t, int y)
     {
-        if (t == null) return;
-
         String passage = race.getPassage();
+
         int progress = t.getProgress();
 
-        int x = 50;
+        if (progress > passage.length())
+        {
+            progress = passage.length();
+        }
 
-        String typed = passage.substring(0, Math.min(progress, passage.length()));
-        String remaining = passage.substring(Math.min(progress, passage.length()));
+        String typed = passage.substring(0, progress);
+        String remaining = passage.substring(progress);
+
+        g.drawString(t.getName(), 10, y);
+
+        int x = 120;
 
         g.setColor(t.getColour());
         g.drawString(typed, x, y);
 
-        FontMetrics fm = g.getFontMetrics();
-        int typedWidth = fm.stringWidth(typed);
+        int typedWidth = g.getFontMetrics().stringWidth(typed);
 
+        g.setColor(t.getColour());
         g.drawString(String.valueOf(t.getSymbol()), x + typedWidth, y);
 
-        g.setColor(Color.BLACK);
-        g.drawString(remaining, x + typedWidth + 10, y);
+        int cursorWidth = g.getFontMetrics().stringWidth(String.valueOf(t.getSymbol()));
 
-        g.drawString(t.getName(), x, y - 20);
+        g.setColor(Color.BLACK);
+        g.drawString(remaining, x + typedWidth + cursorWidth, y);
     }
 }

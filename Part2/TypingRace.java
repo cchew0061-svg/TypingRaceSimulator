@@ -16,19 +16,19 @@ public class TypingRace
     private final String passage;
     private Typist[] typists;
 
-    private Typist winner = null;
-
     private int turnCounter = 0;
+
+    //MODIFIERS
+    private final boolean autocorrect;
+    private final boolean caffeine;
+
+    private Typist winner = null;
 
     // Accuracy thresholds for mistype and burnout events
     // (Ty tuned these values "by feel". They may need adjustment.)
     private static final double MISTYPE_BASE_CHANCE = 0.3;
     private static final int    SLIDE_BACK_AMOUNT   = 2;
     private static final int    BURNOUT_DURATION     = 3;
-
-    //MODIFIERS
-    private final boolean autocorrect;
-    private final boolean caffeine;
 
     /**
      * Constructor for objects of class TypingRace.
@@ -81,7 +81,6 @@ public class TypingRace
                 accuracy = 1;
             }
         }
-
         if(theTypist.getEnergyDrink() && theTypist.getProgress() < passageLength/2){
             accuracy = accuracy * 1.3;
             if(accuracy > 1){
@@ -184,6 +183,11 @@ public class TypingRace
     {
         return passage;
     }
+        
+    public Typist getWinner()
+    {
+        return winner;
+    }
 
     public static void main(String[] args)
     {
@@ -191,5 +195,4 @@ public class TypingRace
             new SetupScreen();
         });
     }
-        
 }
