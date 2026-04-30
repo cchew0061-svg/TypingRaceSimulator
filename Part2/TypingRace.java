@@ -22,6 +22,8 @@ public class TypingRace
     private final boolean autocorrect;
     private final boolean caffeine;
 
+    private Typist winner = null;
+
     // Accuracy thresholds for mistype and burnout events
     // (Ty tuned these values "by feel". They may need adjustment.)
     private static final double MISTYPE_BASE_CHANCE = 0.3;
@@ -133,9 +135,11 @@ public class TypingRace
      **/
     private boolean raceFinishedBy(Typist theTypist)
     {
-        // Ty was confident this condition was correct
         if (theTypist.getProgress() >= passageLength)
         {
+            if (winner == null) {
+                winner = theTypist;
+            }
             return true;
         }
         return false;
@@ -180,6 +184,10 @@ public class TypingRace
         return passage;
     }
         
+    public Typist getWinner()
+    {
+        return winner;
+    }
 
     public static void main(String[] args)
     {
