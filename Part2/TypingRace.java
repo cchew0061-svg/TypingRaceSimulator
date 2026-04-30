@@ -1,4 +1,3 @@
-import java.util.concurrent.TimeUnit;
 
 /**
  * A typing race simulation. Three typists race to complete a passage of text,
@@ -14,15 +13,20 @@ import java.util.concurrent.TimeUnit;
 public class TypingRace
 {
     private final int passageLength;   // Total characters in the passage to type
-    private Typist seat1Typist;
-    private Typist seat2Typist;
-    private Typist seat3Typist;
+    private final String passage;
+    private Typist[] typists;
+
+    private int turnCounter = 0;
 
     // Accuracy thresholds for mistype and burnout events
     // (Ty tuned these values "by feel". They may need adjustment.)
     private static final double MISTYPE_BASE_CHANCE = 0.3;
     private static final int    SLIDE_BACK_AMOUNT   = 2;
     private static final int    BURNOUT_DURATION     = 3;
+
+    //MODIFIERS
+    private final boolean autocorrect;
+    private final boolean caffeine;
 
     /**
      * Constructor for objects of class TypingRace.
@@ -31,12 +35,13 @@ public class TypingRace
      *
      * @param passageLength the number of characters in the passage to type
      */
-    public TypingRace(int passageLength)
+    public TypingRace(String passage, int typistNumber, boolean autocorrect, boolean caffeine)
     {
-        this.passageLength = passageLength;
-        seat1Typist = null;
-        seat2Typist = null;
-        seat3Typist = null;
+        this.passage = passage;
+        this.passageLength = passage.length();
+        this.autocorrect = autocorrect;
+        this.caffeine = caffeine;
+        typists = new Typist[typistNumber];
     }
 
     /**
@@ -47,59 +52,7 @@ public class TypingRace
      */
     public void addTypist(Typist theTypist, int seatNumber)
     {
-        if (seatNumber == 1)
-        {
-            seat1Typist = theTypist;
-        }
-        else if (seatNumber == 2)
-        {
-            seat2Typist = theTypist;
-        }
-        else if (seatNumber == 3)
-        {
-            seat3Typist = theTypist;
-        }
-    }
-
-    /**
-     * Starts the typing race.
-     * All typists are reset to the beginning, then the simulation runs
-     * turn by turn until one typist completes the full passage.
-     *
-     * Note from Ty: "I didn't bother printing the winner at the end,
-     * you can probably figure that out yourself."
-     */
-    public void startRace()
-    {
-        boolean finished = false;
-
-        // Reset all typists to the start of the passage
-        // (Ty was in a hurry here)
-        seat1Typist.resetToStart();
-        seat2Typist.resetToStart();
-        seat3Typist.resetToStart();
-
-        while (!finished)
-        {
-            // Advance each typist by one turn
-            advanceTypist(seat1Typist);
-            advanceTypist(seat2Typist);
-            advanceTypist(seat3Typist);
-
-            // Check if any typist has finished the passage
-            if ( raceFinishedBy(seat1Typist) || raceFinishedBy(seat2Typist) || raceFinishedBy(seat3Typist) )
-            {
-                finished = true;
-            }
-
-            // Wait 200ms between turns so the animation is visible
-            try {
-                TimeUnit.MILLISECONDS.sleep(200);
-            } catch (Exception e) {}
-        }
-
-        // TODO (Task 2a): Print the winner's name here
-
+        typists[seatNumber] = theTypist;
     }
 
     /**
@@ -119,6 +72,24 @@ public class TypingRace
     {
         theTypist.resetJustMistyped();
 
+        double accuracy = theTypist.getAccuracy();
+        if(caffeine && turnCounter <= 10){
+            accuracy = accuracy * 1.2;
+            if(accuracy > 1){
+                accuracy = 1;
+            }
+        }
+
+        if(theTypist.getEnergyDrink() && theTypist.getProgress() < passageLength/2){
+            accuracy = accuracy * 1.3;
+            if(accuracy > 1){
+                accuracy = 1;
+            }
+        }
+        else if(theTypist.getEnergyDrink() && theTypist.getProgress() >= passageLength/2){
+            accuracy = accuracy * 0.7;
+        }
+
         if (theTypist.isBurntOut())
         {
             // Recovering from burnout — skip this turn
@@ -127,22 +98,31 @@ public class TypingRace
         }
 
         // Attempt to type a character
-        if (Math.random() < theTypist.getAccuracy())
+        if (Math.random() < accuracy)
         {
             theTypist.typeCharacter();
         }
 
         // Mistype check — the probability should reflect the typist's accuracy
-        if (Math.random() < (1 - theTypist.getAccuracy()) * MISTYPE_BASE_CHANCE)
+        if (Math.random() < (1 - accuracy) * MISTYPE_BASE_CHANCE)
         {
-            theTypist.slideBack(SLIDE_BACK_AMOUNT);
+            if(!autocorrect){
+                theTypist.slideBack(SLIDE_BACK_AMOUNT);
+            }
+            else if(autocorrect){
+                theTypist.slideBack(SLIDE_BACK_AMOUNT/2);
+            }
         }
 
         // Burnout check — pushing too hard increases burnout risk
         // (probability scales with accuracy squared, capped at ~0.05)
-        if (Math.random() < 0.05 * theTypist.getAccuracy() * theTypist.getAccuracy())
+        double burnoutChance = 0.05 * accuracy * accuracy * theTypist.getBurnoutValue();
+        if(caffeine && turnCounter > 10){
+            burnoutChance = burnoutChance * 2;
+        }
+        if (Math.random() < burnoutChance)
         {
-            theTypist.burnOut(BURNOUT_DURATION);
+            theTypist.burnOut(BURNOUT_DURATION + theTypist.getExtraBurnoutTurns());
         }
     }
 
@@ -159,9 +139,53 @@ public class TypingRace
         {
             return true;
         }
-        else
-        {
-            return false;
+        return false;
+    }
+
+    public void advanceOneTurn(){
+        turnCounter++;
+        for(int i = 0; i<typists.length; i++){
+            this.advanceTypist(typists[i]);
         }
     }
+
+
+    public int getSeatCount()
+    {
+        return typists.length;
+    }
+
+    public Typist getTypist(int i)
+    {
+        return typists[i];
+    }
+
+    public void startRaceGUI()
+    {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            new TypingRaceGUI(this);
+        });
+    }
+
+    public boolean raceFinished(){
+        for(int i = 0; i<typists.length; i++){
+            if(this.raceFinishedBy(typists[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getPassage()
+    {
+        return passage;
+    }
+
+    public static void main(String[] args)
+    {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            new SetupScreen();
+        });
+    }
+        
 }
