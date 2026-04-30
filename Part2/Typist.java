@@ -8,18 +8,11 @@ import java.awt.*;
  * He left a sticky note: "the slide-back thing is optional probably".
  * It is not optional. Good luck.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Cassandra Chew
+ * @version 30/04/2026
  */
 public class Typist
 {
-    // Fields of class Typist
-    // Hint: you will need six fields. Think carefully about their types.
-    // One of them tracks how far along the passage the typist has reached.
-    // Another tracks whether the typist is currently burnt out.
-    // A third tracks HOW MANY turns of burnout remain (not just whether they are burnt out).
-    // The remaining three should be fairly obvious.
-
     private final String typistName;
     private char typistSymbol;
     private double typistAccuracy;
@@ -94,7 +87,7 @@ public class Typist
      */
     public double getAccuracy()
     {
-        return this.typistAccuracy; // placeholder - replace with correct implementation
+        return this.typistAccuracy;
     }
 
     /**
@@ -106,7 +99,7 @@ public class Typist
      */
     public int getProgress()
     {
-        return this.progress; // placeholder - replace with correct implementation
+        return this.progress;
     }
 
     /**
@@ -116,7 +109,7 @@ public class Typist
      */
     public String getName()
     {
-        return this.typistName; // placeholder - replace with correct implementation
+        return this.typistName;
     }
 
     /**
@@ -126,7 +119,7 @@ public class Typist
      */
     public char getSymbol()
     {
-        return this.typistSymbol; // placeholder - replace with correct implementation
+        return this.typistSymbol;
     }
 
     /**
@@ -137,7 +130,7 @@ public class Typist
      */
     public int getBurnoutTurnsRemaining()
     {
-        return this.burnoutTurnsLeft;        // placeholder - replace with correct implementation
+        return this.burnoutTurnsLeft;
     }
 
     /**
