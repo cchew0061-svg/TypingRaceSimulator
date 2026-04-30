@@ -15,8 +15,8 @@ public class DrawPanel extends JPanel
         new Thread(() -> {
             while (!race.raceFinished())
             {
-                race.advanceOneTurn(); // update logic
-                repaint();             // redraw screen
+                race.advanceOneTurn();
+                repaint();
 
                 try {
                     Thread.sleep(200);
@@ -61,7 +61,7 @@ public class DrawPanel extends JPanel
 
         g.setColor(Color.BLACK);
         g.drawString(remaining, x + typedWidth + 10, y);
-        
+
         g.drawString(t.getName(), x, y - 20);
     }
 }
