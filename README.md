@@ -42,7 +42,22 @@ java TypingRace
 
 ## Part 2 — GUI Simulation
 
-To be implemented as part of the coursework. Place all GUI-related source files in this folder. The graphical version is started by calling `startRaceGUI()`.
+### How to compile
+
+```bash
+cd Part2
+javac Typist.java TypingRace.java DrawPanel.java RacerConfigurationScreen.java SetupScreen.java TypingRaceGUI.java TypistConfigurationPanel.java
+```
+
+### How to run
+
+The race is started by calling `startRaceGUI()` on a `TypingRace` object.
+
+Run:
+
+```bash
+java TypingRace
+```
 
 ## Dependencies
 
