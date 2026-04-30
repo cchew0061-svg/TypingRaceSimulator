@@ -10,18 +10,25 @@ public class DrawPanel extends JPanel
         this.race = race;
     }
 
-    public void startAnimation()
-    {
+    public void startAnimation(){
         new Thread(() -> {
             while (!race.raceFinished())
             {
                 race.advanceOneTurn();
                 repaint();
 
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {}
+                try { Thread.sleep(200); } catch (Exception e) {}
             }
+
+            Typist winner = race.getWinner();
+
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "The winner is: " + winner.getName() +
+                    "\nThe winner's accuracy is: " + winner.getAccuracy()
+                );
+            });
         }).start();
     }
 
