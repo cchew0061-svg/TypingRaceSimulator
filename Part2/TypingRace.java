@@ -16,6 +16,8 @@ public class TypingRace
     private final String passage;
     private Typist[] typists;
 
+    private Typist winner = null;
+
     private int turnCounter = 0;
 
     // Accuracy thresholds for mistype and burnout events
@@ -134,9 +136,11 @@ public class TypingRace
      */
     private boolean raceFinishedBy(Typist theTypist)
     {
-        // Ty was confident this condition was correct
         if (theTypist.getProgress() >= passageLength)
         {
+            if (winner == null) {
+                winner = theTypist;
+            }
             return true;
         }
         return false;
