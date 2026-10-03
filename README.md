@@ -59,13 +59,7 @@ Run:
 java TypingRace
 ```
 
-## Dependencies
+## Technologies
 
-- Java Development Kit (JDK) 11 or higher
-- No external libraries required for Part 1
-- Part 2 may use Java Swing (included in standard JDK) or JavaFX
-
-## Notes
-
-- All code should compile and run using standard command-line tools without any IDE-specific configuration.
-- The starter code in Part1 was originally written by Ty Posaurus. It contains known issues — finding and fixing them is part of the coursework.
+- Java
+- Java Swing
