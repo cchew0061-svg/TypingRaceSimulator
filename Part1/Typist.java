@@ -1,13 +1,6 @@
 /**
- * Write a description of class Typist here.
- *
- * Starter code generously abandoned by Ty Posaurus, your predecessor,
- * who typed with two fingers and considered that "good enough".
- * He left a sticky note: "the slide-back thing is optional probably".
- * It is not optional. Good luck.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Cassandra Chew
+ * @version 1
  */
 public class Typist
 {
@@ -209,41 +202,4 @@ public class Typist
     public void resetJustMistyped(){
         this.justMistyped = false;
     }
-
-    /*public static void main(String[] args) {
-        Typist t = new Typist('@', "name1", 0.5);
-        //test slideback
-        t.typeCharacter();
-        t.typeCharacter();
-        t.slideBack(100);
-        System.out.println(t.getProgress());
-        //test burnout
-        t.burnOut(2);
-        t.recoverFromBurnout();
-        System.out.println(t.getBurnoutTurnsRemaining());
-        System.out.println(t.isBurntOut());
-        t.recoverFromBurnout();
-        System.out.println(t.getBurnoutTurnsRemaining());
-        System.out.println(t.isBurntOut());
-        //test reset
-        t.typeCharacter();
-        t.typeCharacter();
-        t.burnOut(5);
-        t.resetToStart();
-        System.out.println(t.getProgress());
-        System.out.println(t.getBurnoutTurnsRemaining());
-        System.out.println(t.isBurntOut());
-        //test accuracy
-        t.setAccuracy(20);
-        System.out.println(t.getAccuracy());
-        t.setAccuracy(-10);
-        System.out.println(t.getAccuracy());
-        //test movement
-        t.typeCharacter();
-        System.out.println(t.getProgress());
-        t.typeCharacter();
-        System.out.println(t.getProgress());
-        t.typeCharacter();
-        System.out.println(t.getProgress());
-    }*/
 }
